@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var demos: Array<Demo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +20,23 @@ class MainActivity : AppCompatActivity() {
 
     private class Demo(var text: String, var intent: Intent)
 
-    private class DemoViewHolder(parent: ViewGroup, inflater: LayoutInflater): RecyclerView.ViewHolder(inflater.inflate(R.layout.demo_view, parent, false)) {
-        private val text: TextView = itemView.findViewById(R.id.text)
+    private class DemoAdapter : RecyclerView.Adapter<DemoViewHolder?>() {
+       override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DemoViewHolder {
+            return DemoViewHolder(parent, getLayoutInflater())
+        }
+
+        override fun onBindViewHolder(holder: DemoViewHolder, position: Int) {
+            val demo: Demo = this.demos.get(position)
+            holder.text.text = demo.text
+            holder.itemView.setOnClickListener { startActivity(demo.intent) }
+        }
+
+        override fun getItemCount(): Int {
+            return demos.size
+        }
+    }
+
+    private class DemoViewHolder(parent: ViewGroup, inflater: LayoutInflater) : RecyclerView.ViewHolder(inflater.inflate(R.layout.demo_view, parent, false)) {
+        val text: TextView = itemView.findViewById(R.id.text)
     }
 }
