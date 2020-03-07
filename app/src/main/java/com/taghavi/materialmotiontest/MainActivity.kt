@@ -16,6 +16,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        demos = arrayOf(
+            Demo("Tossable Tap", Intent(this, TossableTapActivity::class.java)),
+            Demo("Tween", Intent(this, TweenActivity::class.java)),
+            Demo("Gesture", Intent(this, GestureActivity::class.java))
+        )
     }
 
     private class Demo(var text: String, var intent: Intent)
